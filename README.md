@@ -64,4 +64,12 @@
       </html>
 
      ```
-3. 개발 시작
+3. git initialize (git repository 생성 후 순서대로 진행)
+   ```
+   (myenv) (base) seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ git init .
+   Initialized empty Git repository in /Users/seongjaeyong/Documents/react-fireDB/.git/
+   
+   (myenv) (base) seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ git remote add origin https://github.com/jysung1122/react_fireDB
+   
+   (myenv) (base) seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ 
+   ```
