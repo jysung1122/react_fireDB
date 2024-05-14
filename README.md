@@ -14,6 +14,6 @@
    //1-4. Select a variant: TypeScript + SWC 선택
    //javascript보다 typescript를 사용할 때 더 쉽고 오류도 적기 때문 + 속도가 빠른 Rust typescript 컴파일러인 SWC를 포함
 
-   //1-5. 다 진행되면 아래 코드 입력해서 vscode로 이동
+   //1-5. 진행하면 폴더가 만들어 짐. 아래 코드 입력해서 vscode로 이동
    seongjaeyong@seongjaeyong-ui-MacBookAir Documents % code react-fireDB
    ```
