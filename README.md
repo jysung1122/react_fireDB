@@ -73,3 +73,13 @@
    
    (myenv) (base) seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ 
    ```
+4. 아래 순서대로 설치 코드 실행
+   ```
+   seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm i react-router-dom@6.14.2
+
+   seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm i styled-reset
+
+   seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm i styled-components@6.0.7
+
+   seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm i @types/styled-components -D
+   ```
