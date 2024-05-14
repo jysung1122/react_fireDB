@@ -16,4 +16,36 @@
 
    //1-5. 진행하면 폴더가 만들어 짐. 아래 코드 입력해서 vscode로 이동
    seongjaeyong@seongjaeyong-ui-MacBookAir Documents % code react-fireDB
+
+   //1-6. vscode에서 ctrl + shift + ~ 키를 통해 터미널을 열어 아래 코드 입력
+   seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm install
+
+   //1-7. 모든 것이 제대로 작동하는지 확인하기 위해 아래 코드 입력
+   seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm run dev
+   //default : http://localhost:5173/
    ```
+2. src 폴더 수정
+   - App.tsx, main.tsx, vite-env.d.ts 두고 다 삭제
+   - App.tsx
+     ```
+      function App() {
+        return <></>;
+      }
+      
+      export default App;
+
+     ```
+   - main.tsx
+     ```
+      import React from "react";
+      import ReactDOM from "react-dom/client";
+      import App from "./App.tsx";
+      
+      ReactDOM.createRoot(document.getElementById("root")!).render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      );
+
+     ```
+3. 개발 시작
