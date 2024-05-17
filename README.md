@@ -83,6 +83,10 @@
 
    seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm i @types/styled-components -D
    ```
+### Firebase
+- 유저 인증에 관한 작업은 전부 firebase가 함
+- 우리가 할 일은 firebase sdk가 유저 정보를 보낼 때까지, 유저에게 보여줄 loading screen을 만드는 것
+- 특별히 sdk의 작업 종료를 확인할 필요도 없음. 그냥 2초간 화면을 가려줄 Loading 컴포넌트를 만들어주면 됨
 
 ## 기본적인 routing
 1. src/App.tsx (수정) + CSS
