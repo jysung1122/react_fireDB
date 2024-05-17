@@ -213,7 +213,6 @@
    
      const init = async () => {
        //wait for firebase
-       await auth.authStateReady();
        setLoading(false);
      };
    
