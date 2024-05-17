@@ -183,7 +183,30 @@
 - 유저 인증에 관한 작업은 전부 firebase가 함
 - 우리가 할 일은 firebase sdk가 유저 정보를 보낼 때까지, 유저에게 보여줄 loading screen을 만드는 것
 - 특별히 sdk의 작업 종료를 확인할 필요도 없음. 그냥 2초간 화면을 가려줄 Loading 컴포넌트를 만들어주면 됨
-- src/components/loading-screen.tsx
+- src/components/loading-screen.tsx (App.tsx를 보면 알다시피 가져오는 속도가 빨라서 굳이 사용하진 않음)
+  ```
+   import { styled } from "styled-components";
+
+   const Wrapper = styled.div`
+     height: 100vh;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+   `;
+   
+   const Text = styled.span`
+     font-size: 24px;
+   `;
+   
+   export default function LoadingScreen() {
+     return (
+       <Wrapper>
+         <Text>Loading..</Text>
+       </Wrapper>
+     );
+   }
+
+  ```
 
 1. Firebase 로그인 후 프로젝트 생성 -> web app 선택
 2. 그 후 vscode의 터미널에서 아래 코드 실행
