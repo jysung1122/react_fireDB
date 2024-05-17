@@ -205,15 +205,29 @@
        </Wrapper>
      );
    }
-
-  //src.App.tsx 수정
-  return (
-    <>
-      <GlobalStyles />
-      {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
-    </>
-  );
-
+  ```
+- src/App.tsx 수정
+  ```
+   function App() {
+     const [isLoading, setLoading] = useState(true);
+   
+     const init = async () => {
+       //wait for firebase
+       await auth.authStateReady();
+       setLoading(false);
+     };
+   
+     useEffect(() => {
+       init();
+     }, []);
+   
+     return (
+       <>
+         <GlobalStyles />
+         {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
+       </>
+     );
+   }
   ```
 
 1. Firebase 로그인 후 프로젝트 생성 -> web app 선택
