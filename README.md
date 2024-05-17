@@ -183,7 +183,7 @@
 - 유저 인증에 관한 작업은 전부 firebase가 함
 - 우리가 할 일은 firebase sdk가 유저 정보를 보낼 때까지, 유저에게 보여줄 loading screen을 만드는 것
 - 특별히 sdk의 작업 종료를 확인할 필요도 없음. 그냥 2초간 화면을 가려줄 Loading 컴포넌트를 만들어주면 됨
-- src/components/loading-screen.tsx (App.tsx를 보면 알다시피 가져오는 속도가 빨라서 굳이 사용하진 않음)
+- src/components/loading-screen.tsx
   ```
    import { styled } from "styled-components";
 
