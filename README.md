@@ -239,7 +239,6 @@
    //src/App.tsx
    const init = async () => {
        //wait for firebase
-       //setTimeout(() => setIsLoading(false), 2000);
        await auth.authStateReady();
        setLoading(false);
    };
