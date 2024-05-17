@@ -83,10 +83,6 @@
 
    seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm i @types/styled-components -D
    ```
-### Firebase
-- 유저 인증에 관한 작업은 전부 firebase가 함
-- 우리가 할 일은 firebase sdk가 유저 정보를 보낼 때까지, 유저에게 보여줄 loading screen을 만드는 것
-- 특별히 sdk의 작업 종료를 확인할 필요도 없음. 그냥 2초간 화면을 가려줄 Loading 컴포넌트를 만들어주면 됨
 
 ## 기본적인 routing
 1. src/App.tsx (수정) + CSS
@@ -182,3 +178,46 @@
   http://localhost:5173/profile
   ```
 ## 개발 시작
+
+### Firebase
+- 유저 인증에 관한 작업은 전부 firebase가 함
+- 우리가 할 일은 firebase sdk가 유저 정보를 보낼 때까지, 유저에게 보여줄 loading screen을 만드는 것
+- 특별히 sdk의 작업 종료를 확인할 필요도 없음. 그냥 2초간 화면을 가려줄 Loading 컴포넌트를 만들어주면 됨
+- src/components/loading-screen.tsx
+
+1. Firebase 로그인 후 프로젝트 생성 -> web app 선택
+2. 그 후 vscode의 터미널에서 아래 코드 실행
+   ```
+   seongjaeyong-ui-MacBookAir:react-fireDB seongjaeyong$ npm install firebase@10.1.0
+   ```
+3. sdk 복사 + 붙여넣기 (src/firebase.ts)
+   ```
+   import { initializeApp } from "firebase/app";
+
+   const firebaseConfig = {
+     apiKey: "AIzaSyBbTiZeRLOdSiKxQvi4juuIsc66hty1E5M",
+     authDomain: "react-firebase-99a05.firebaseapp.com",
+     projectId: "react-firebase-99a05",
+     storageBucket: "react-firebase-99a05.appspot.com",
+     messagingSenderId: "1022945754250",
+     appId: "1:1022945754250:web:ec5603e3b5b275b3118173",
+   };
+   
+   const app = initializeApp(firebaseConfig);
+
+   ```
+4. firebase의 프로젝트 개요에서 Authentication 활성화 하기 (지금은 이메일/비밀번호로만 로그인 활성화)
+5. 코드 추가
+   ```
+   //src/firebase.ts
+   //app에 대한 인증 서비스를 사용
+   export const auth = getAuth(app);
+
+   //src/App.tsx
+   const init = async () => {
+       //wait for firebase
+       //setTimeout(() => setIsLoading(false), 2000);
+       await auth.authStateReady();
+       setLoading(false);
+   };
+   ```
