@@ -85,7 +85,7 @@
    ```
 
 ## 기본적인 routing
-- src/App.tsx (수정)
+1. src/App.tsx (수정)
   ```
    import { RouterProvider, createBrowserRouter } from "react-router-dom";
    import Layout from "./components/layout";
@@ -118,9 +118,8 @@
    }
    
    export default App;
-
   ```
-- src/components/layout.tsx (추가)
+2. src/components/layout.tsx (추가)
   ```
    import { Outlet } from "react-router-dom";
    //Outlet은 자식 라우트의 컴포넌트를 렌더링하는 장소를 지정
@@ -134,19 +133,19 @@
      );
    }
   ```
-- src/routes/home.tsx (추가)
+3. src/routes/home.tsx (추가)
   ```
    export default function Home() {
      return <h1>Home!</h1>;
    }
   ```
-- src/routes/profile.tsx (추가)
+4. src/routes/profile.tsx (추가)
   ```
    export default function Profile() {
      return <h1>Profile</h1>;
    }
   ```
-- 접속해서 확인
+5. 접속해서 확인
   ```
   http://localhost:5173/
   http://localhost:5173/profile
