@@ -183,6 +183,8 @@
 - 유저 인증에 관한 작업은 전부 firebase가 함
 - 우리가 할 일은 firebase sdk가 유저 정보를 보낼 때까지, 유저에게 보여줄 loading screen을 만드는 것
 - 특별히 sdk의 작업 종료를 확인할 필요도 없음. 그냥 2초간 화면을 가려줄 Loading 컴포넌트를 만들어주면 됨
+- **firebase/auth/cordova 에서 가져오는 함수 사용하면 안됨**
+- **firebase/auth 에서 가져온 함수 사용**
 - src/components/loading-screen.tsx
   ```
    import { styled } from "styled-components";
@@ -263,4 +265,70 @@
        await auth.authStateReady();
        setLoading(false);
    };
+   ```
+## Firebase 깃허브 로그인 방법 추가하는 법
+1. firebase의 Authentication에서 로그인 방법 -> 새 제공업체 추가 -> 깃허브 선택 -> 사용 설정 활성화
+2. 새로운 GitHub 애플리케이션을 만들어야함 -> https://github.com/settings/developers 로 이동
+3. New OAuth App 클릭
+   3-1. Application Name : react_firebase
+   3-2. Homepage URL : https://react-firebase-99a05.firebaseapp.com
+   3-3. Authorization callback URL : https://react-firebase-99a05.firebaseapp.com/__/auth/handler
+   - 3-2는 3-3에서 따온 주소이고 3-3은 firebase에서 1번을 수행하면 나오는 주소이다
+   3-4. Register Application 버튼 클릭
+4. 깃허브의 Client ID와 Client secrets를 firebase에 붙여넣기
+5. 저장하면 깃허브 로그인 사용 가능하게 됨
+
+### 깃허브로 로그인하는거 코드에 활성화 시키기
+1. https://github.com/logos 로 가서 로고 다운받기
+2. github-mark.svg 파일을 vscode의 public 폴더로 복사
+3. 컴포넌트 생성 후(src/components/github-btn.tsx) login이나 createAccount에 사용
+   ```
+   import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
+   import styled from "styled-components";
+   import { auth } from "../firebase";
+   import { useNavigate } from "react-router-dom";
+   
+   const Button = styled.span`
+     margin-top: 50px;
+     background-color: white;
+     font-weight: 600;
+     padding: 10px 20px;
+     border-radius: 50px;
+     border: 0;
+     display: flex;
+     gap: 5px;
+     align-items: center;
+     justify-content: center;
+     color: black;
+     cursor: pointer;
+   `;
+   const Logo = styled.img`
+     height: 25px;
+   `;
+   
+   export default function GithubButton() {
+     const navigate = useNavigate();
+     const onClick = async () => {
+       const provider = new GithubAuthProvider();
+       try {
+         await signInWithPopup(auth, provider);
+         navigate("/");
+       } catch (e: any) {
+         if (e.code === "auth/popup-closed-by-user") {
+           return;
+         } else if (e.code === "auth/account-exists-with-different-credential") {
+           alert("This email is already in use");
+           return;
+         }
+       }
+     };
+   
+     return (
+       <Button onClick={onClick}>
+         <Logo src="/github-mark.svg" />
+         Continue with Github
+       </Button>
+     );
+   }
+
    ```
