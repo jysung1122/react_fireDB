@@ -383,7 +383,7 @@
   ### firebase에서 웹앱으로 데이터 가져오기
   - src/components/Timeline.tsx
     ```
-    	const [posts, setPosts] = useState<IPost[]>([]);
+    const [posts, setPosts] = useState<IPost[]>([]);
     //1. posts라는 상태 변수를 초기화합니다. 이 변수는 IPost 타입의 배열로 설정되며, 초기값은 빈 배열입니다.
 	
 	const fetchPosts = async () => {
