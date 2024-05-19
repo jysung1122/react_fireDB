@@ -379,3 +379,36 @@
   //4. •	게시물 내용 입력 필드를 비웁니다.
 	    •	파일 선택을 초기화합니다.
   ```
+
+  ### firebase에서 웹앱으로 데이터 가져오기
+  - src/components/Timeline.tsx
+    ```
+    	const [posts, setPosts] = useState<IPost[]>([]);
+    //1. posts라는 상태 변수를 초기화합니다. 이 변수는 IPost 타입의 배열로 설정되며, 초기값은 빈 배열입니다.
+	
+	const fetchPosts = async () => {
+    //2. 게시물을 가져오는 비동기 함수를 정의합니다.
+	     const postsQuery = query(
+	     collection(db, "posts"),
+	     orderBy("createdAt", "desc")
+	   );
+    //3. posts 컬렉션에서 createdAt 필드를 기준으로 내림차순(desc)으로 정렬된 쿼리를 생성합니다.
+
+	   const snapshot = await getDocs(postsQuery);
+    //	4. 생성된 쿼리를 실행하여 문서 스냅샷을 가져옵니다.
+	   const posts = snapshot.docs.map((doc) => {
+	   const { post, createdAt, username, userId, photo } = doc.data();
+	   return {
+	   post,
+	   createdAt,
+	   username,
+	   userId,
+	   photo,
+	   id: doc.id,
+	   };
+	});
+    //5. 스냅샷의 각 문서를 매핑하여 필요한 데이터 필드(post, createdAt, username, userId, photo)와 문서 ID(id)를 포함한 객체 배열로 변환합니다.
+	
+	setPosts(posts);
+      };
+    ```
