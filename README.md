@@ -332,3 +332,39 @@
    }
 
    ```
+### 웹앱에서 firebase로 데이터 보내기
+- src/components/post-form.tsx
+  ```
+      setLoading(true);
+  //1. 로딩 상태를 활성화합니다. 이렇게 하면 사용자가 데이터가 처리 중임을 알 수 있습니다.
+  
+      const doc = await addDoc(collection(db, "posts"), {
+        post,
+        createdAt: Date.now(),
+        username: user.displayName || "Anonymous",
+        userId: user.uid,
+      });
+  //2. posts 컬렉션에 새 문서를 추가합니다. 문서에는 게시물 내용(post), 생성 시각(createdAt), 사용자 이름(username), 사용자 ID(userId)가 포함됩니다.
+	
+      if (file) {
+        const locationRef = ref(
+          storage,
+          `posts/${user.uid}-${user.displayName}/${doc.id}`
+        );
+        const result = await uploadBytes(locationRef, file);
+        const url = await getDownloadURL(result.ref);
+        await updateDoc(doc, {
+          photo: url,
+        });
+      }
+  //3. 파일이 있는 경우:
+	•	파일을 저장할 위치를 지정하는 참조(locationRef)를 생성합니다.
+	•	파일을 지정된 위치에 업로드합니다.
+	•	업로드된 파일의 다운로드 URL을 얻습니다.
+	•	다운로드 URL을 새로 추가된 문서의 photo 필드에 저장합니다.
+
+      setPost("");
+      setFile(null);
+  //4. •	게시물 내용 입력 필드를 비웁니다.
+	    •	파일 선택을 초기화합니다.
+  ```
