@@ -463,3 +463,44 @@
   //변환된 게시물 배열을 posts 상태 변수에 저장합니다.
   };
   ```
+### 사용자가 타임라인을 보고 있을 때만 관련 이벤트를 듣게하기
+- src/components/Timeline.tsx
+  ```
+  export default function Timeline() {
+  const [posts, setPosts] = useState<IPost[]>([]);
+
+  useEffect(() => {
+    let unsubcribe: Unsubscribe | null = null;
+  //unsubscribe 변수는 Firestore의 실시간 업데이트 구독을 해제하기 위한 함수를 저장하는 용도로 사용됩니다.
+  //초기값은 null로 설정되어 있습니다. 이는 아직 구독이 설정되지 않았음을 의미합니다.
+  
+    const fetchPosts = async () => {
+      const postsQuery = query(
+        collection(db, "posts"),
+        orderBy("createdAt", "desc")
+      );
+      unsubcribe = await onSnapshot(postsQuery, (snapshot) => {
+        const posts = snapshot.docs.map((doc) => {
+          const { post, createdAt, username, userId, photo } = doc.data();
+          return {
+            post,
+            createdAt,
+            username,
+            userId,
+            photo,
+            id: doc.id,
+          };
+        });
+        setPosts(posts);
+      });
+    };
+    fetchPosts();
+    return () => {
+      unsubcribe && unsubcribe();
+    };
+  //useEffect 훅의 클린업 함수로, 컴포넌트가 언마운트될 때 호출됩니다.
+  //unsubscribe가 null이 아니면(즉, 구독이 설정되어 있으면) unsubscribe 함수를 호출하여 Firestore 구독을 해제합니다.
+  //이렇게 하면 컴포넌트가 사라질 때 구독이 해제되어 불필요한 리소스 사용을 방지하고, 메모리 누수를 예방할 수 있습니다.
+  
+  }, []);
+  ```
