@@ -412,3 +412,24 @@
 	setPosts(posts);
       };
     ```
+### firebase에서 웹앱으로 가져온 데이터 출력하기
+- src/components/post.tsx
+  ```
+  //이 코드는 Post라는 React 함수형 컴포넌트를 정의하고 기본적으로 내보냅니다.
+  //Post 컴포넌트는 username, photo, post라는 세 개의 속성을 받습니다. 이 속성들은 IPost 타입으로 지정됩니다.
+  	export default function Post({ username, photo, post }: IPost) {
+	  return (
+	    <Wrapper>
+	      <Column>
+	        <Username>{username}</Username>
+	        <Payload>{post}</Payload>
+	      </Column>
+	      {photo ? (
+	        <Column>
+	          <Photo src={photo} />
+	        </Column>
+	      ) : null}
+	    </Wrapper>
+	  );
+	}
+  ```
