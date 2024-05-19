@@ -354,6 +354,10 @@
   //2. posts 컬렉션에 새 문서를 추가합니다. 문서에는 게시물 내용(post), 생성 시각(createdAt), 사용자 이름(username), 사용자 ID(userId)가 포함됩니다.
 	
       if (file) {
+  	if (file.size > 1024 * 1024 * 1) {
+          alert("사진은 1MB 이하로 제한해주세요.");
+          return;
+        }
         const locationRef = ref(
           storage,
           `posts/${user.uid}-${user.displayName}/${doc.id}`
