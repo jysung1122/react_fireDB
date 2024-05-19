@@ -433,3 +433,33 @@
 	  );
 	}
   ```
+### Timeline 실시간으로 가져오기
+- src/components/Timeline.tsx
+  ```
+  export default function Timeline() {
+  const [posts, setPosts] = useState<IPost[]>([]);
+  const fetchPosts = async () => {
+    const postsQuery = query(
+      collection(db, "posts"),
+      orderBy("createdAt", "desc")
+    );
+    await onSnapshot(postsQuery, (snapshot) => {
+      const posts = snapshot.docs.map((doc) => {
+        const { post, createdAt, username, userId, photo } = doc.data();
+        return {
+          post,
+          createdAt,
+          username,
+          userId,
+          photo,
+          id: doc.id,
+        };
+      });
+      setPosts(posts);
+    });
+  //onSnapshot 함수를 사용하여 postsQuery에 대해 실시간으로 스냅샷을 구독합니다.
+  //스냅샷이 업데이트될 때마다 콜백 함수가 호출됩니다.
+  //각 문서를 매핑하여 필요한 데이터 필드(post, createdAt, username, userId, photo)와 문서 ID(id)를 포함한 객체 배열로 변환합니다.
+  //변환된 게시물 배열을 posts 상태 변수에 저장합니다.
+  };
+  ```
