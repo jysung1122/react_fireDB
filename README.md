@@ -270,12 +270,19 @@
 1. firebase의 Authentication에서 로그인 방법 -> 새 제공업체 추가 -> 깃허브 선택 -> 사용 설정 활성화
 2. 새로운 GitHub 애플리케이션을 만들어야함 -> https://github.com/settings/developers 로 이동
 3. New OAuth App 클릭
+   
    3-1. Application Name : react_firebase
+   
    3-2. Homepage URL : https://react-firebase-99a05.firebaseapp.com
+   
    3-3. Authorization callback URL : https://react-firebase-99a05.firebaseapp.com/__/auth/handler
+   
    - 3-2는 3-3에서 따온 주소이고 3-3은 firebase에서 1번을 수행하면 나오는 주소이다
+     
    3-4. Register Application 버튼 클릭
+     
 4. 깃허브의 Client ID와 Client secrets를 firebase에 붙여넣기
+   
 5. 저장하면 깃허브 로그인 사용 가능하게 됨
 
 ### 깃허브로 로그인하는거 코드에 활성화 시키기
