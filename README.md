@@ -395,7 +395,7 @@
     //3. posts 컬렉션에서 createdAt 필드를 기준으로 내림차순(desc)으로 정렬된 쿼리를 생성합니다.
 
 	   const snapshot = await getDocs(postsQuery);
-    //	4. 생성된 쿼리를 실행하여 문서 스냅샷을 가져옵니다.
+    //4. 생성된 쿼리를 실행하여 문서 스냅샷을 가져옵니다.
 	   const posts = snapshot.docs.map((doc) => {
 	   const { post, createdAt, username, userId, photo } = doc.data();
 	   return {
