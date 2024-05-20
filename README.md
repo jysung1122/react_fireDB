@@ -504,3 +504,22 @@
   
   }, []);
   ```
+### Post 삭제하기
+- src/components/post.tsx
+  ```
+  export default function Post({ username, photo, post, userId, id }: IPost) {
+  const user = auth.currentUser;
+  const onDelete = async () => {
+    const ok = confirm("Are you sure you want to delete this post?");
+    if (!ok || user?.uid !== userId) return;
+    try {
+      await deleteDoc(doc(db, "posts", id));
+      if (photo) {
+        const photoRef = ref(storage, `posts/${user.uid}/${id}`);
+        await deleteObject(photoRef);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  ```
