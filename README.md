@@ -504,22 +504,130 @@
   
   }, []);
   ```
-### Post 삭제하기
+### Post 삭제하기 & 수정하기
 - src/components/post.tsx
   ```
-  export default function Post({ username, photo, post, userId, id }: IPost) {
-  const user = auth.currentUser;
-  const onDelete = async () => {
-    const ok = confirm("Are you sure you want to delete this post?");
-    if (!ok || user?.uid !== userId) return;
-    try {
-      await deleteDoc(doc(db, "posts", id));
-      if (photo) {
-        const photoRef = ref(storage, `posts/${user.uid}/${id}`);
-        await deleteObject(photoRef);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+	const Post = ({ username, photo, post, userId, id }: IPost) => {
+	  const user = auth.currentUser;
+	  const [editMode, setEditMode] = useState(false);
+	  const [editValue, setEditValue] = useState(post);
+	  const [isLoading, setLoading] = useState(false);
+	  const [lastValue, setLastValue] = useState(post);
+	  const [file, setFile] = useState<File | null>(null);
+	
+	  const onDelete = async () => {
+	    const ok = confirm("Are you sure you want to delete this post?");
+	    if (!ok || user?.uid !== userId) return;
+	    try {
+	      await deleteDoc(doc(db, "posts", id));
+	      if (photo) {
+	        const photoRef = ref(storage, `posts/${user.uid}/${id}`);
+	        await deleteObject(photoRef);
+	      }
+	    } catch (e) {
+	      console.error(e);
+	    }
+	  };
+	
+	  const onEdit = async () => {
+	    setEditMode(true);
+	  };
+	
+	  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	    setEditValue(e.target.value);
+	  };
+	
+	  const onSave = async () => {
+	    if (isLoading || user?.uid !== userId) return;
+	    try {
+	      setLoading(true);
+	      await updateDoc(doc(db, `posts/${id}`), { post: editValue });
+	      if (file) {
+	        const locationRef = ref(storage, `posts/${user.uid}/${id}`);
+	        deleteObject(locationRef).catch((e: FirebaseError) => {
+	          if (e.code === "storage/object-not-found") {
+	            return;
+	          } else {
+	            console.error(e);
+	          }
+	        });
+	
+	        const result = await uploadBytes(locationRef, file);
+	        const url = await getDownloadURL(result.ref);
+	        await updateDoc(doc(db, `posts/${id}`), { photo: url });
+	        setFile(null);
+	      }
+	
+	      await setLastValue(editValue);
+	      setEditMode(false);
+	    } catch (e) {
+	      console.error(e);
+	    } finally {
+	      setLoading(false);
+	    }
+	  };
+	
+	  const onCancel = () => {
+	    setEditValue(lastValue);
+	    setEditMode(false);
+	  };
+	
+	  const onChangePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+	    const { files } = e.target;
+	    if (files && files.length === 1) {
+	      setFile(files[0]);
+	    }
+	  };
+	
+	  return (
+	    <Wrapper>
+	      <Column>
+	        <Username>{username}</Username>
+	        {editMode ? (
+	          <Input
+	            name="post"
+	            value={editValue}
+	            onChange={onChange}
+	            placeholder="Enter the post to update."
+	          />
+	        ) : (
+	          <Payload>{post}</Payload>
+	        )}
+	        {user?.uid === userId ? (
+	          <div>
+	            <Button $isRed={true} onClick={editMode ? onCancel : onDelete}>
+	              {editMode ? "Cancel" : "Delete"}
+	            </Button>
+	            {!editMode ? (
+	              <Button onClick={onEdit} disabled={isLoading}>
+	                Update
+	              </Button>
+	            ) : (
+	              <Button onClick={onSave}>
+	                {isLoading ? "Saving.." : "Save"}
+	              </Button>
+	            )}
+	          </div>
+	        ) : null}
+	      </Column>
+	      <Column>
+	        {editMode ? (
+	          <>
+	            <EditPhoto htmlFor="editPhoto">
+	              {file ? "Edited Photo ✅" : "Edit Photo"}
+	            </EditPhoto>
+	            <File
+	              type="file"
+	              accept="image/*"
+	              id="editPhoto"
+	              onChange={onChangePhoto}
+	            />
+	          </>
+	        ) : photo ? (
+	          <Photo src={photo} />
+	        ) : null}
+	      </Column>
+	    </Wrapper>
+	  );
+	};
   ```
