@@ -246,7 +246,7 @@
      projectId: "react-firebase-99a05",
      storageBucket: "react-firebase-99a05.appspot.com",
      messagingSenderId: "1022945754250",
-     appId: "1:1022945754250:web:ec5603e3b5b275b3118173",
+     appId: "{YOUR_APP_ID}",
    };
    
    const app = initializeApp(firebaseConfig);
