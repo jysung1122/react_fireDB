@@ -631,3 +631,23 @@
 	  );
 	};
   ```
+### 유저 프로필 이미지 생성 및 교체
+- src/components/profile.tsx
+  ```
+  const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (!user) return;
+
+    if (files && files.length === 1) {
+      const file = files[0];
+      const locationRef = ref(storage, `avatars/${user?.uid}`);
+      const result = await uploadBytes(locationRef, file);
+      const avatarUrl = await getDownloadURL(result.ref);
+      setAvatar(avatarUrl);
+      await updateProfile(user, {
+        photoURL: avatarUrl,
+      });
+    }
+  };
+  ```
