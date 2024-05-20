@@ -146,7 +146,7 @@
    export default App;
 
   ```
-2. src/components/layout.tsx (추가)
+2. src/components/layout.tsx (생성)
   ```
    import { Outlet } from "react-router-dom";
    //Outlet은 자식 라우트의 컴포넌트를 렌더링하는 장소를 지정
@@ -160,13 +160,13 @@
      );
    }
   ```
-3. src/routes/home.tsx (추가)
+3. src/routes/home.tsx (생성)
   ```
    export default function Home() {
      return <h1>Home!</h1>;
    }
   ```
-4. src/routes/profile.tsx (추가)
+4. src/routes/profile.tsx (생성)
   ```
    export default function Profile() {
      return <h1>Profile</h1>;
