@@ -632,7 +632,7 @@
 	};
   ```
 ### 유저 프로필 이미지 생성 및 교체
-- src/components/profile.tsx
+- src/routes/profile.tsx
   ```
   const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -650,4 +650,38 @@
       });
     }
   };
+  ```
+### 프로필 페이지에 유저가 올린 게시글 출력하기
+- 사용자의 posts만 가져오는 query 만들기
+- firebaseRK WPRHDGKSMS query의 where 옵션을 사용하여 읽어올 데이터를 필터링 할 수 있음
+- where에는 3개의 인자가 필요하며, 1번은 doc, 2번은 연산자, 3번은 우리가 원하는 조건
+- 데이터를 필터링하거나 다양한 정렬옵션을 주고 싶다면 .firebase에게 미리 해당 정보를 줘야함
+- 쿼리를 날린 후 브라우저의 콘솔에서 설정창링크를 확인할 수 있음
+- src/routes/profile.tsx
+  ```
+  const fetchPost = async () => {
+    const postQuery = query(
+      collection(db, "posts"),
+      where("userId", "==", user?.uid),
+      orderBy("createdAt", "desc"),
+      limit(25)
+    );
+    const snapshot = await getDocs(postQuery);
+    const posts = snapshot.docs.map((doc) => {
+      const { post, createdAt, userId, username, photo } = doc.data();
+      return {
+        post,
+        createdAt,
+        userId,
+        username,
+        photo,
+        id: doc.id,
+      };
+    });
+    setPosts(posts);
+  };
+
+  useEffect(() => {
+    fetchPost();
+  }, []);
   ```
