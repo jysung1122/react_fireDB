@@ -9,6 +9,21 @@
 3. 백엔드를 공부하고 싶었지만 firebase에 기능 구현이 다 되어 있어 아쉬움
 4. firebase의 함수를 활용하는 법만 배우고 DB에 저장하거나 불러오는 직접적인 백엔드 개발 공부를 못하였음 ㅜ.ㅜ
 
+## 실행화면
+- 로그인 페이지
+<img width="1440" alt="스크린샷 2024-05-22 오전 11 31 30" src="https://github.com/jysung1122/react_fireDB/assets/56614779/cf7d5f8e-5f41-451d-a39c-1723f381861c">
+
+- 회원가입 페이지
+<img width="1440" alt="스크린샷 2024-05-22 오전 11 33 32" src="https://github.com/jysung1122/react_fireDB/assets/56614779/f98e12d6-6fd7-4384-ad5e-b4af65a5d9ba">
+
+- 메인 페이지
+<img width="1440" alt="스크린샷 2024-05-22 오전 11 33 59" src="https://github.com/jysung1122/react_fireDB/assets/56614779/693bba58-d0b7-48f8-b263-e3882a067fd1">
+
+- 프로필 페이지
+<img width="1440" alt="스크린샷 2024-05-22 오전 11 34 18" src="https://github.com/jysung1122/react_fireDB/assets/56614779/e7bb8373-768e-48a4-9c77-4c6aeefbc40a">
+
+
+
 ## 개발 환경 구축
 1. 사용하기 쉬운 개발 환경을 제공하는 Vite 사용
    ```
